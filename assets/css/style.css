@@ -58,6 +58,7 @@ ol, ul {
 
 h1 {
     font-size: 2.75rem;
+    margin-bottom: 0;
 }
 
 h2 {
@@ -415,7 +416,9 @@ footer {
     border-color: transparent;
 }
 
-.finished-books-container {
+.current-book-container,
+.finished-books-container,
+.empty-book-list {
     display: none;
 }
 

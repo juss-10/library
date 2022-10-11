@@ -15,11 +15,11 @@
             <ul class="list">
                 <li>
                     <label for="book-title">Title</label>
-                    <input type="text" id="book-title" data-library-book="title" required>
+                    <input type="text" id="book-title" data-library-input="title" required>
                 </li>
                 <li>
                     <label for="book-author">Author</label>
-                    <input type="text" id="book-author" data-library-book="author" required>
+                    <input type="text" id="book-author" data-library-input="author" required>
                 </li>
                 <li>
                     <fieldset>
@@ -27,11 +27,11 @@
                         <ul class="list">
                             <li>
                                 <label for="page-count">Number of pages</label>
-                                <input type="number" id="page-count" data-library-book="page-count">
+                                <input type="number" id="page-count" data-library-input="page-count">
                             </li>
                             <li>
                                 <label for="pages-read">Number of pages read</label>
-                                <input type="number" id="pages-read" data-library-book="pages-read" required>
+                                <input type="number" id="pages-read" data-library-input="pages-read" required>
                             </li>
                         </ul>
                     </fieldset>
@@ -41,7 +41,7 @@
                         <legend>Status</legend>
                         <ul class="list">
                             <li>
-                                <input type="checkbox" id="current-book" data-library-book="current-book">
+                                <input type="checkbox" id="current-book" data-library-input="current-book">
                                 <label for="current-book">Currently reading</label>
                             </li>
                         </ul>
@@ -49,7 +49,7 @@
                 </li>
                 <li>
                     <div class="row justify-content-end gap-small">
-                        <button type="button" class="button button-submit" data-library-button="submit-book-form">Save book</button>
+                        <button type="submit" class="button button-submit" data-library-button="submit-book-form">Save book</button>
                         <button type="button" class="button button-cancel" data-library-button="cancel-book-form">Cancel</button>
                     </div>
                 </li>
@@ -79,31 +79,7 @@
                 <h1>My reading list</h1>
                 <div class="container-inner current-book-container">
                     <h2>Current book</h2>
-                    <div class="current-book-card-container">
-                        <div class="card">
-                            <div class="card-image">
-                                <span class="material-symbols-outlined card-image-icon">menu_book</span>
-                            </div>
-                            <div class="card-content">
-                                <div class="card-top">
-                                    <div class="card-info">
-                                        <h3 class="book-title">Title</h3>
-                                        <p class="book-author">Author</p>
-                                    </div>
-                                    <div class="card-controls">
-                                        <span class="material-symbols-outlined card-control">edit</span>
-                                        <span class="material-symbols-outlined card-control">delete</span>
-                                    </div>
-                                </div>
-                                <div class="card-bottom">
-                                    <label class="meter-label">
-                                        0% read
-                                        <meter min="0" max="100"></meter>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="current-book-card-container"></div>
                 </div>
             </div>
         </section>
@@ -113,33 +89,10 @@
                     <li class="list-inline-tab active-tab">Reading</li>
                     <li class="list-inline-tab">Finished</li>
                 </ul>
-                <div class="cards-container">
-                    <div class="card">
-                        <div class="card-image">
-                            <span class="material-symbols-outlined card-image-icon">menu_book</span>
-                        </div>
-                        <div class="card-content">
-                            <div class="card-top">
-                                <div class="card-info">
-                                    <h3 class="book-title">Title</h3>
-                                    <p class="book-author">Author</p>
-                                </div>
-                                <div class="card-controls">
-                                    <span class="material-symbols-outlined card-control">edit</span>
-                                    <span class="material-symbols-outlined card-control">delete</span>
-                                </div>
-                            </div>
-                            <div class="card-bottom">
-                                <label class="meter-label">
-                                    0% read
-                                    <meter min="0" max="100"></meter>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <p data-library-text="empty-reading-list">Your reading list is empty.</p>
+                <p class="empty-book-list" data-library-text="empty-finished-list">You haven't finished reading any books yet.</p>
+                <div class="cards-container"></div>
                 <div class="cards-container finished-books-container">
-                    <p>You haven't finished reading any books yet.</p>
                 </div>
             </div>
         </section>
