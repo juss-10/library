@@ -70,6 +70,27 @@ h2 {
 
 /* LAYOUT */
 
+.row,
+.col {
+    display: flex;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.col {
+    flex-direction: column;
+}
+
+.justify-content-end {
+    justify-content: flex-end;
+}
+
+.gap-small {
+    gap: 0.5em;
+}
+
 /* containers */
 
 .container {
@@ -90,10 +111,76 @@ h2 {
     margin-bottom: 0;
 }
 
+/* modals */
+
+.modal {
+    display: none;
+}
+
+.open-modal,
+.no-scroll {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.open-modal {
+    display: grid;
+    place-items: center;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+}
+
+.modal-content {
+    background-color: #FFF;
+    padding: 1em;
+    border-radius: 0.25em;
+    border: 1px solid #FFF;
+    width: min(50%, 60rem);
+}
+
+/* form elements */
+
+input {
+    display: block;
+    font-size: 100%;
+    width: 100%;
+    margin-bottom: 1em;
+    padding: 0.5em;
+}
+
+input[type="text"],
+input[type="number"] {
+    border: 1px solid #C5C5C5;
+    border-radius: 0.25em;
+}
+
+input[type="checkbox"] {
+    display: inline;
+    margin-bottom: 0;
+    padding: 0;
+    width: initial;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 0.25em;
+}
+
+fieldset {
+    margin-bottom: 1em;
+    border-radius: 0.25em;
+    border: 1px solid #C5C5C5;
+}
+
 /* buttons */
 
 button {
     cursor: pointer;
+    user-select: none;
     border: 1px solid #C5C5C5;
     border-radius: 0.25em;
     background-color: #FFF;
@@ -150,6 +237,11 @@ button {
 .header-button {
     border: none;
     border-bottom: 3px solid #B3B3B3;
+}
+
+.header-button:active {
+    position: relative;
+    top: 3px;
 }
 
 /* sections */
