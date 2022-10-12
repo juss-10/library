@@ -25,7 +25,10 @@ const finishedReadingList = document.querySelector('[data-library-list="finished
 // Event listeners
 
 openBookFormButton.addEventListener("click", () => openModal(saveBookModal))
-cancelBookFormButton.addEventListener("click", () => closeModal(saveBookModal))
+cancelBookFormButton.addEventListener("click", () => {
+    closeModal(saveBookModal)
+    resetForm(saveBookForm)
+})
 saveBookForm.addEventListener("submit", saveBookHandler)
 readingListTab.addEventListener("click", setBookList)
 finishedReadingListTab.addEventListener("click", setBookList)
@@ -42,6 +45,10 @@ function closeModal(modal) {
     document.body.classList.remove("no-scroll")
 }
 
+function resetForm(form) {
+    form.reset()
+}
+
 function saveBookHandler(event) {
     event.preventDefault()
     saveBookToLibrary()
@@ -49,6 +56,7 @@ function saveBookHandler(event) {
     showLibraryBook(book)
     enableBookControls(book)
     closeModal(saveBookModal)
+    resetForm(saveBookForm)
 }
 
 // Create and store books
