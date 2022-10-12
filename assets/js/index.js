@@ -41,7 +41,8 @@ function closeModal(modal) {
 function saveBookHandler(event) {
     event.preventDefault()
     saveBookToLibrary()
-    showLibraryBook()
+    const book = myLibrary[myLibrary.length - 1];
+    showLibraryBook(book)
     closeModal(saveBookModal)
 }
 
@@ -65,6 +66,8 @@ function saveBookToLibrary() {
     const currentBook = currentBookInput.checked;
     const book = new Book(title, author, pageCount, pagesRead, currentBook);
     myLibrary.push(book)
+    const index = myLibrary.length - 1;
+    myLibrary[index].id = index; 
 }
 
 function getPageCount() {
@@ -77,10 +80,8 @@ function getPagesRead() {
 
 // Show stored books
 
-function showLibraryBook() {
-    const book = myLibrary[myLibrary.length - 1];
-    const bookHtml = getBookHtml(book)
-    setBookHtml(book, bookHtml)
+function showLibraryBook(book) {
+    setBookHtml(book, getBookHtml(book))
 }
 
 function getBookHtml() {
