@@ -416,11 +416,10 @@ footer {
     border-color: transparent;
 }
 
-.current-book-container,
-.finished-books-container,
-.empty-book-list {
+.no-display {
     display: none;
 }
+
 
 .block {
     display: block;

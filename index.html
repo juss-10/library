@@ -78,7 +78,7 @@
         <section class="section-accent">
             <div class="container">
                 <h1>My reading list</h1>
-                <div class="container-inner current-book-container" data-library-container="current-book">
+                <div class="container-inner current-book-container no-display" data-library-container="current-book">
                     <h2>Current book</h2>
                     <div class="current-book-card-container" data-library-list="current"></div>
                 </div>
@@ -87,13 +87,14 @@
         <section>
             <div class="container">
                 <ul class="list-inline">
-                    <li class="list-inline-tab active-tab">Reading</li>
-                    <li class="list-inline-tab">Finished</li>
+                    <li class="list-inline-tab active-tab" data-library-list-tab="reading">Reading</li>
+                    <li class="list-inline-tab" data-library-list-tab="finished">Finished</li>
                 </ul>
-                <p data-library-text="empty-reading-list">Your reading list is empty.</p>
-                <p class="empty-book-list" data-library-text="empty-finished-list">You haven't finished reading any books yet.</p>
-                <div class="cards-container" data-library-list="reading"></div>
-                <div class="cards-container finished-books-container" data-library-list="finished">
+                <div class="cards-container" data-library-list="reading">
+                    <p data-library-text="empty-reading-list">Your reading list is empty.</p>
+                </div>
+                <div class="cards-container finished-books-container no-display" data-library-list="finished">
+                    <p data-library-text="empty-finished-list">You haven't finished reading any books yet.</p>
                 </div>
             </div>
         </section>

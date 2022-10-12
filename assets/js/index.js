@@ -5,6 +5,8 @@ const openBookFormButton = document.querySelector('[data-library-button="open-bo
 const submitBookFormButton = document.querySelector('[data-library-button="submit-book-form"]');
 const cancelBookFormButton = document.querySelector('[data-library-button="cancel-book-form"]');
 const currentBookListContainer = document.querySelector('[data-library-container="current-book"]');
+const readingListTab = document.querySelector('[data-library-list-tab="reading"]');
+const finishedReadingListTab = document.querySelector('[data-library-list-tab="finished"]');
 
 // Form inputs
 
@@ -25,6 +27,8 @@ const finishedReadingList = document.querySelector('[data-library-list="finished
 openBookFormButton.addEventListener("click", () => openModal(saveBookModal))
 cancelBookFormButton.addEventListener("click", () => closeModal(saveBookModal))
 saveBookForm.addEventListener("submit", saveBookHandler)
+readingListTab.addEventListener("click", setBookList)
+finishedReadingListTab.addEventListener("click", setBookList)
 
 // Modals
 
@@ -130,4 +134,15 @@ function setBookHtml(book, bookHtml) {
 
 function showCurrentBook() {
     currentBookListContainer.classList.add("block")
+}
+
+function setBookList(event) {
+    const isActiveTab = event.target.classList.contains("active-tab");
+
+    if (!isActiveTab) {
+        readingList.classList.toggle("no-display")
+        readingListTab.classList.toggle("active-tab")
+        finishedReadingList.classList.toggle("no-display")
+        finishedReadingListTab.classList.toggle("active-tab")
+    }
 }
