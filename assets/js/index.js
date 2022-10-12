@@ -145,6 +145,10 @@ function showCurrentBook() {
     currentBookListContainer.classList.add("block")
 }
 
+function hideCurrentBook() {
+    currentBookListContainer.classList.remove("block")
+}
+
 function setBookList(event) {
     const isActiveTab = event.target.classList.contains("active-tab");
 
@@ -158,7 +162,7 @@ function setBookList(event) {
 
 function enableBookControls(book) {
     enableBookControl(book, '[data-library-button="edit-book"]', () => editBookHandler(book))
-    enableBookControl(book, '[data-library-button="delete-book"]', event => deleteBookHandler(event, book))
+    enableBookControl(book, '[data-library-button="delete-book"]', () => deleteBookHandler(book))
 }
 
 function enableBookControl(book, controlButtonSelector, callback) {
@@ -180,16 +184,33 @@ function setBookInputs(book) {
     currentBookInput.checked = book.currentBook;
 }
 
-function deleteBookHandler(event, book) {
-    const deletedBookId = book.id;
-    deleteBook(event, book)
-    updateBookIds(deletedBookId)
+function deleteBookHandler(book) {
+    const confirmDeleteModal = document.querySelector('[data-library-modal="confirm-delete"]');
+    const confirmDeleteButton = document.querySelector('[data-library-button="confirm-book-delete"]');
+    const cancelDeleteButton = document.querySelector('[data-library-button="cancel-book-delete"]');
+
+    openModal(confirmDeleteModal)
+
+    confirmDeleteButton.addEventListener("click", () => {
+        const deletedBookId = book.id;
+        deleteBook(book)
+        updateBookIds(deletedBookId)
+        closeModal(confirmDeleteModal)
+    })
+
+    cancelDeleteButton.addEventListener("click", () => closeModal(confirmDeleteModal))
 }
 
-function deleteBook(event, book) {
-    const bookCard = event.currentTarget.closest(".card");
-    bookCard.remove()
+function deleteBook(book) {
+    const bookIdElements = document.querySelectorAll(`[data-library-book-id="${book.id}"]`);
+    bookIdElements.forEach(bookIdElement => bookIdElement.closest(".card").remove())
     myLibrary.splice(book.id, 1)
+
+    const hasCurrentBook = Number(currentBook.children.length);
+
+    if (!hasCurrentBook) {
+        hideCurrentBook()
+    }
 }
 
 function updateBookIds(deletedBookId) {
