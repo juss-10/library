@@ -6,6 +6,7 @@
     <title>Library</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.0/purify.min.js" defer></script>
     <script src="assets/js/index.js" defer></script>
 </head>
 <body>
@@ -77,9 +78,9 @@
         <section class="section-accent">
             <div class="container">
                 <h1>My reading list</h1>
-                <div class="container-inner current-book-container">
+                <div class="container-inner current-book-container" data-library-container="current-book">
                     <h2>Current book</h2>
-                    <div class="current-book-card-container"></div>
+                    <div class="current-book-card-container" data-library-list="current"></div>
                 </div>
             </div>
         </section>
@@ -91,8 +92,8 @@
                 </ul>
                 <p data-library-text="empty-reading-list">Your reading list is empty.</p>
                 <p class="empty-book-list" data-library-text="empty-finished-list">You haven't finished reading any books yet.</p>
-                <div class="cards-container"></div>
-                <div class="cards-container finished-books-container">
+                <div class="cards-container" data-library-list="reading"></div>
+                <div class="cards-container finished-books-container" data-library-list="finished">
                 </div>
             </div>
         </section>

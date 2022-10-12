@@ -422,6 +422,10 @@ footer {
     display: none;
 }
 
+.block {
+    display: block;
+}
+
 /* meter */
 
 meter {
