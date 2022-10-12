@@ -80,7 +80,7 @@ function saveBookToLibrary() {
     const book = new Book(title, author, pageCount, pagesRead, currentBook);
     myLibrary.push(book)
     const index = myLibrary.length - 1;
-    myLibrary[index].id = index; 
+    myLibrary[index].id = index;
 }
 
 function getPageCount() {
@@ -158,6 +158,7 @@ function setBookList(event) {
 
 function enableBookControls(book) {
     enableBookControl(book, '[data-library-button="edit-book"]', () => editBookHandler(book))
+    enableBookControl(book, '[data-library-button="delete-book"]', event => deleteBookHandler(event, book))
 }
 
 function enableBookControl(book, controlButtonSelector, callback) {
@@ -170,10 +171,50 @@ function editBookHandler(book) {
     setBookInputs(book)
     openModal(saveBookModal)
 }
+
 function setBookInputs(book) {
     titleInput.value = book.title;
     authorInput.value = book.author;
     pageCountInput.value = book.pageCount;
     pagesReadInput.value = book.pagesRead;
     currentBookInput.checked = book.currentBook;
+}
+
+function deleteBookHandler(event, book) {
+    const deletedBookId = book.id;
+    deleteBook(event, book)
+    updateBookIds(deletedBookId)
+}
+
+function deleteBook(event, book) {
+    const bookCard = event.currentTarget.closest(".card");
+    bookCard.remove()
+    myLibrary.splice(book.id, 1)
+}
+
+function updateBookIds(deletedBookId) {
+    const idElements = Array.from(document.querySelectorAll("[data-library-book-id]"));
+    let ids = idElements.map(idElement => Number(idElement.dataset.libraryBookId));
+    ids = [...new Set(ids)].sort((a, b) => a - b);
+    const idsToUpdate = [];
+
+    ids.forEach(id => idsToUpdate.push(
+        Array.from(document.querySelectorAll(`[data-library-book-id="${id}"]`))
+    ))
+
+    idsToUpdate.forEach(arrayOfIds => {
+        arrayOfIds.forEach(idElement => {
+            const id = Number(idElement.dataset.libraryBookId);
+
+            if (id > deletedBookId) {
+                idElement.dataset.libraryBookId = id - 1;
+            }
+        })
+    })
+
+    myLibrary.forEach(book => {
+        if (book.id > deletedBookId) {
+            book.id = book.id - 1;
+        }
+    })
 }
