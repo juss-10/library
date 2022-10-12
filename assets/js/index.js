@@ -47,6 +47,7 @@ function saveBookHandler(event) {
     saveBookToLibrary()
     const book = myLibrary[myLibrary.length - 1];
     showLibraryBook(book)
+    enableBookControls(book)
     closeModal(saveBookModal)
 }
 
@@ -145,4 +146,26 @@ function setBookList(event) {
         finishedReadingList.classList.toggle("no-display")
         finishedReadingListTab.classList.toggle("active-tab")
     }
+}
+
+function enableBookControls(book) {
+    enableBookControl(book, '[data-library-button="edit-book"]', () => editBookHandler(book))
+}
+
+function enableBookControl(book, controlButtonSelector, callback) {
+    const bookControls = Array.from(document.querySelectorAll(`[data-library-book-id="${book.id}"]`));
+    const bookControlButtons = bookControls.map(bookControl => bookControl.querySelector(controlButtonSelector));
+    bookControlButtons.forEach(bookControlButton => bookControlButton.addEventListener("click", callback))
+}
+
+function editBookHandler(book) {
+    setBookInputs(book)
+    openModal(saveBookModal)
+}
+function setBookInputs(book) {
+    titleInput.value = book.title;
+    authorInput.value = book.author;
+    pageCountInput.value = book.pageCount;
+    pagesReadInput.value = book.pagesRead;
+    currentBookInput.checked = book.currentBook;
 }
