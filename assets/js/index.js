@@ -137,6 +137,8 @@ function getBookHtml(book) {
 function setBookHtml(book, bookHtml) {
     const html = DOMPurify.sanitize(bookHtml);
 
+    removeBookHtml(book)
+
     if (book.currentBook) {
         showCurrentBook()
         currentBook.innerHTML = html;
@@ -145,6 +147,20 @@ function setBookHtml(book, bookHtml) {
         readingList.insertAdjacentHTML("beforeend", html)
     } else {
         finishedReadingList.insertAdjacentHTML("beforeend", html)
+    }
+}
+
+function removeBookHtml(book) {
+    const idElements = Array.from(document.querySelectorAll(`[data-library-book-id="${book.id}"]`));
+    const bookCards = idElements.map(idElement => idElement.closest(".card"));
+    const hasBooksToRemove = bookCards.length > 0;
+
+    if (hasBooksToRemove) {
+        bookCards.forEach(bookCard => bookCard.remove())
+    }
+
+    if (!book.currentBook) {
+        hideCurrentBook()
     }
 }
 
