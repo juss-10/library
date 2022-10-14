@@ -19,7 +19,7 @@ const idInput = document.querySelector('[data-library-input="id"]');
 
 // Book list containers
 
-const currentBook = document.querySelector('[data-library-list="current"]');
+const currentBookList = document.querySelector('[data-library-list="current"]');
 const readingList = document.querySelector('[data-library-list="reading"]');
 const finishedReadingList = document.querySelector('[data-library-list="finished"]');
 
@@ -52,8 +52,7 @@ function resetForm(form) {
 
 function saveBookHandler(event) {
     event.preventDefault()
-    saveBookToLibrary()
-    const book = myLibrary[myLibrary.length - 1];
+    const book = saveBookToLibrary();
     showLibraryBook(book)
     enableBookControls(book)
     closeModal(saveBookModal)
@@ -62,14 +61,14 @@ function saveBookHandler(event) {
 
 // Create and store books
 
-function Book(title, author, pageCount, pagesRead, currentBook) {
+function Book(title, author, pageCount, pagesRead, isCurrentBook) {
     this.title = title;
     this.author = author;
     this.pageCount = pageCount;
     this.pagesRead = pagesRead;
     this.percentRead = (this.pagesRead / this.pageCount) * 100;
     this.finishedReading = this.percentRead === 100;
-    this.currentBook = (this.finishedReading) ? false : currentBook;
+    this.currentBook = (this.finishedReading) ? false : isCurrentBook;
 }
 
 function saveBookToLibrary() {
@@ -77,9 +76,9 @@ function saveBookToLibrary() {
     const author = authorInput.value;
     const pageCount = getPageCount();
     const pagesRead = getPagesRead();
-    const currentBook = currentBookInput.checked;
+    const isCurrentBook = currentBookInput.checked;
     const hasId = idInput.value !== "";
-    const book = new Book(title, author, pageCount, pagesRead, currentBook);
+    const book = new Book(title, author, pageCount, pagesRead, isCurrentBook);
 
     if (hasId) {
         const bookId = Number(idInput.value);
@@ -90,6 +89,8 @@ function saveBookToLibrary() {
         const bookId = myLibrary.indexOf(book);
         book.id = bookId;
     }
+
+    return myLibrary[myLibrary.indexOf(book)]
 }
 
 function getPageCount() {
@@ -141,7 +142,7 @@ function setBookHtml(book, bookHtml) {
 
     if (book.currentBook) {
         showCurrentBook()
-        currentBook.innerHTML = html;
+        currentBookList.innerHTML = html;
         readingList.insertAdjacentHTML("beforeend", html)
     } else if (!book.finishedReading) {
         readingList.insertAdjacentHTML("beforeend", html)
@@ -159,7 +160,7 @@ function removeBookHtml(book) {
         bookCards.forEach(bookCard => bookCard.remove())
     }
 
-    if (!book.currentBook) {
+    if (hasBooksToRemove && !book.currentBook) {
         hideCurrentBook()
     }
 }
@@ -230,7 +231,7 @@ function deleteBook(book) {
     bookIdElements.forEach(bookIdElement => bookIdElement.closest(".card").remove())
     myLibrary.splice(book.id, 1)
 
-    const hasCurrentBook = Number(currentBook.children.length);
+    const hasCurrentBook = Number(currentBookList.children.length);
 
     if (!hasCurrentBook) {
         hideCurrentBook()
