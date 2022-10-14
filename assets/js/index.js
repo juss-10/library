@@ -90,7 +90,19 @@ function saveBookToLibrary() {
         book.id = bookId;
     }
 
+    if (isCurrentBook) {
+        updateCurrentBook(book)
+    }
+
     return myLibrary[myLibrary.indexOf(book)]
+}
+
+function updateCurrentBook(currentBook) {
+    myLibrary.forEach(book => {
+        if (book.currentBook && book.id !== currentBook.id) {
+            book.currentBook = false;
+        }
+    })
 }
 
 function getPageCount() {
