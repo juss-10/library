@@ -15,6 +15,7 @@ const authorInput = document.querySelector('[data-library-input="author"]');
 const pageCountInput = document.querySelector('[data-library-input="page-count"]');
 const pagesReadInput = document.querySelector('[data-library-input="pages-read"]');
 const currentBookInput = document.querySelector('[data-library-input="current-book"]');
+const idInput = document.querySelector('[data-library-input="id"]');
 
 // Book list containers
 
@@ -77,10 +78,18 @@ function saveBookToLibrary() {
     const pageCount = getPageCount();
     const pagesRead = getPagesRead();
     const currentBook = currentBookInput.checked;
+    const hasId = idInput.value !== "";
     const book = new Book(title, author, pageCount, pagesRead, currentBook);
-    myLibrary.push(book)
-    const index = myLibrary.length - 1;
-    myLibrary[index].id = index;
+
+    if (hasId) {
+        const bookId = Number(idInput.value);
+        myLibrary[bookId] = book;
+        myLibrary[bookId].id = bookId;
+    } else {
+        myLibrary.push(book)
+        const bookId = myLibrary.indexOf(book);
+        book.id = bookId;
+    }
 }
 
 function getPageCount() {
@@ -97,9 +106,7 @@ function showLibraryBook(book) {
     setBookHtml(book, getBookHtml(book))
 }
 
-function getBookHtml() {
-    const book = myLibrary[myLibrary.length - 1];
-
+function getBookHtml(book) {
     return `
         <div class="card">
             <div class="card-image">
@@ -182,6 +189,7 @@ function setBookInputs(book) {
     pageCountInput.value = book.pageCount;
     pagesReadInput.value = book.pagesRead;
     currentBookInput.checked = book.currentBook;
+    idInput.value = book.id;
 }
 
 function deleteBookHandler(book) {
