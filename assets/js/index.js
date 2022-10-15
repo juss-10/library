@@ -74,8 +74,8 @@ function Book(title, author, pageCount, pagesRead, isCurrentBook) {
 function saveBookToLibrary() {
     const title = titleInput.value;
     const author = authorInput.value;
-    const pageCount = getPageCount();
-    const pagesRead = getPagesRead();
+    const pageCount = getPageInput().pageCount;
+    const pagesRead = getPageInput().pagesRead;
     const isCurrentBook = currentBookInput.checked;
     const hasId = idInput.value !== "";
     const book = new Book(title, author, pageCount, pagesRead, isCurrentBook);
@@ -105,12 +105,28 @@ function updateCurrentBook(currentBook) {
     })
 }
 
-function getPageCount() {
-    return Number(pageCountInput.value)
-}
+function getPageInput() {
+    const pageCount = Number(pageCountInput.value);
+    const pagesRead = Number(pagesReadInput.value);
+    const hasValidPageRange = pagesRead <= pageCount;
+    const hasValidPageCount = pageCount > 0 && hasValidPageRange && pageCount !== "";
+    const hasValidPagesRead = pagesRead >= 0 && hasValidPageRange && pagesRead !== "";
+    const hasPageCountInput = pageCountInput.value !== "";
+    const hasPagesReadInput = pagesReadInput.value !== "";
+    const hasPageInput = hasPageCountInput && hasPagesReadInput;
+    const hasValidPageInput = hasValidPageCount && hasValidPagesRead && hasPageInput;
 
-function getPagesRead() {
-    return Number(pagesReadInput.value)
+    return {
+        pageCount,
+        pagesRead,
+        hasValidPageRange,
+        hasValidPageCount,
+        hasValidPagesRead,
+        hasPageCountInput,
+        hasPagesReadInput,
+        hasPageInput,
+        hasValidPageInput
+    }
 }
 
 // Show stored books
