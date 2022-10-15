@@ -34,6 +34,7 @@ cancelBookFormButton.addEventListener("click", () => {
 saveBookForm.addEventListener("submit", saveBookHandler)
 readingListTab.addEventListener("click", setBookList)
 finishedReadingListTab.addEventListener("click", setBookList)
+pageCountInput.addEventListener("input", togglePagesReadInput)
 bookFormInputs.forEach(bookFormInput => bookFormInput.addEventListener("input", validateInput))
 
 // Modals
@@ -161,6 +162,25 @@ function setInputAsValid(input) {
 function setInputAsInvalid(input) {
     input.classList.remove("valid")
     input.classList.add("invalid")
+}
+
+function togglePagesReadInput() {
+    const pageInput = getPageInput();
+    pagesReadInput.setAttribute("max", pageInput.pageCount)
+
+    if (pageInput.hasPageCountInput && pageInput.hasValidPageRange) {
+        pagesReadInput.disabled = false;
+    } else if (!pageInput.hasPageCountInput) {
+        pagesReadInput.value = "";
+        pagesReadInput.disabled = true;
+        pagesReadInput.classList.remove("valid", "invalid")
+    } else if (!pageInput.hasValidPageRange) {
+        pagesReadInput.value = "";
+        pagesReadInput.classList.remove("valid", "invalid")
+    } else if (!pageInput.hasPageCountInput) {
+        pagesReadInput.value = "";
+        pagesReadInput.disabled = true;
+    }
 }
 
 // Show stored books

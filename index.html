@@ -40,7 +40,7 @@
                             </li>
                             <li>
                                 <label for="pages-read">Number of pages read</label>
-                                <input type="number" id="pages-read" data-library-input="pages-read" min="0" required>
+                                <input type="number" id="pages-read" data-library-input="pages-read" min="0" required disabled>
                             </li>
                         </ul>
                     </fieldset>
@@ -50,7 +50,7 @@
                         <legend>Status</legend>
                         <ul class="list">
                             <li>
-                                <input type="checkbox" id="current-book" data-library-input="current-book">
+                                <input type="checkbox" id="current-book" data-library-input="current-book" disabled>
                                 <label for="current-book">Currently reading</label>
                             </li>
                         </ul>
@@ -99,6 +99,7 @@
                     <li class="list-inline-tab active-tab" data-library-list-tab="reading">Reading</li>
                     <li class="list-inline-tab" data-library-list-tab="finished">Finished</li>
                 </ul>
+
                 <div class="cards-container" data-library-list="reading">
                     <p data-library-text="empty-reading-list">Your reading list is empty.</p>
                 </div>
