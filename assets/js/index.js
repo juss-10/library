@@ -115,13 +115,14 @@ function updateCurrentBook(currentBook) {
 function getPageInput() {
     const pageCount = Number(pageCountInput.value);
     const pagesRead = Number(pagesReadInput.value);
-    const hasValidPageRange = pagesRead <= pageCount;
-    const hasValidPageCount = pageCount > 0 && hasValidPageRange && pageCount !== "";
-    const hasValidPagesRead = pagesRead >= 0 && hasValidPageRange && pagesRead !== "";
     const hasPageCountInput = pageCountInput.value !== "";
     const hasPagesReadInput = pagesReadInput.value !== "";
-    const hasPageInput = hasPageCountInput && hasPagesReadInput;
-    const hasValidPageInput = hasValidPageCount && hasValidPagesRead && hasPageInput;
+    const hasValidPageInput = hasPagesReadInput && hasPageCountInput;
+    const hasValidPageRange = pagesRead <= pageCount;
+    const hasValidCurrentBookRange = pageCount > 0 && pagesRead < pageCount && hasValidPageInput;
+    const hasValidPageCount = pageCount > 0 && hasValidPageRange && pageCount !== "";
+    const hasValidPagesRead = pagesRead >= 0 && hasValidPageRange && pagesRead !== "";
+    
 
     return {
         pageCount,
@@ -131,8 +132,7 @@ function getPageInput() {
         hasValidPagesRead,
         hasPageCountInput,
         hasPagesReadInput,
-        hasPageInput,
-        hasValidPageInput
+        hasValidCurrentBookRange
     }
 }
 
@@ -163,10 +163,13 @@ function validateInput() {
             (hasValidInput) ? setInputAsValid(this) : setInputAsInvalid(this);
     }
 
-    if (!pageInput.hasValidPageInput) {
+    if (!pageInput.hasValidCurrentBookRange) {
+        currentBookInput.checked = false;
         currentBookInput.disabled = true;
+        console.log("here")
     } else {
         currentBookInput.disabled = false;
+        console.log("or here")
     }
 }
 
