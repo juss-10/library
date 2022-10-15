@@ -120,10 +120,9 @@ function getPageInput() {
     const hasValidPageInput = hasPagesReadInput && hasPageCountInput;
     const hasValidPageRange = pagesRead <= pageCount;
     const hasValidCurrentBookRange = pageCount > 0 && pagesRead < pageCount && hasValidPageInput;
-    const hasValidPageCount = pageCount > 0 && hasValidPageRange && pageCount !== "";
-    const hasValidPagesRead = pagesRead >= 0 && hasValidPageRange && pagesRead !== "";
+    const hasValidPageCount = pageCount > 0 && hasValidPageRange && pageCountInput.value !== "";
+    const hasValidPagesRead = pagesRead >= 0 && hasValidPageRange && pagesReadInput.value !== "";
     
-
     return {
         pageCount,
         pagesRead,
