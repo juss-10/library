@@ -10,7 +10,7 @@ const finishedReadingListTab = document.querySelector('[data-library-list-tab="f
 
 // Form inputs
 
-const bookFormInputs = saveBookForm.querySelectorAll("input");
+const bookFormInputs = Array.from(saveBookForm.querySelectorAll("input"));
 const titleInput = document.querySelector('[data-library-input="title"]');
 const authorInput = document.querySelector('[data-library-input="author"]');
 const pageCountInput = document.querySelector('[data-library-input="page-count"]');
@@ -55,11 +55,15 @@ function resetForm(form) {
 
 function saveBookHandler(event) {
     event.preventDefault()
-    const book = saveBookToLibrary();
-    showLibraryBook(book)
-    enableBookControls(book)
-    closeModal(saveBookModal)
-    resetForm(saveBookForm)
+    const valid = validateForm();
+
+    if (valid) {
+        const book = saveBookToLibrary();
+        showLibraryBook(book)
+        enableBookControls(book)
+        closeModal(saveBookModal)
+        resetForm(saveBookForm)
+    }
 }
 
 // Create and store books
@@ -130,6 +134,18 @@ function getPageInput() {
         hasPageInput,
         hasValidPageInput
     }
+}
+
+function validateForm() {
+    const formInputs = bookFormInputs.filter(input => input !== idInput);
+    const valid = formInputs.every(input => {
+        const isValidInput = input.validity.valid;
+        const hasInput = input.value !== "";
+
+        return isValidInput && hasInput;
+    });
+
+    return valid;
 }
 
 function validateInput() {
