@@ -159,6 +159,18 @@ input[type="number"] {
     border-radius: 0.25em;
 }
 
+input[type="text"].valid,
+input[type="number"].valid {
+    border: 1px solid green;
+    outline-color: green;
+}
+
+input[type="text"].invalid,
+input[type="number"].invalid {
+    border: 1px solid red;
+    outline-color: red;
+}
+
 input[type="checkbox"] {
     display: inline;
     margin-bottom: 0;

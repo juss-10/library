@@ -10,6 +10,7 @@ const finishedReadingListTab = document.querySelector('[data-library-list-tab="f
 
 // Form inputs
 
+const bookFormInputs = saveBookForm.querySelectorAll("input");
 const titleInput = document.querySelector('[data-library-input="title"]');
 const authorInput = document.querySelector('[data-library-input="author"]');
 const pageCountInput = document.querySelector('[data-library-input="page-count"]');
@@ -33,6 +34,7 @@ cancelBookFormButton.addEventListener("click", () => {
 saveBookForm.addEventListener("submit", saveBookHandler)
 readingListTab.addEventListener("click", setBookList)
 finishedReadingListTab.addEventListener("click", setBookList)
+bookFormInputs.forEach(bookFormInput => bookFormInput.addEventListener("input", validateInput))
 
 // Modals
 
@@ -127,6 +129,38 @@ function getPageInput() {
         hasPageInput,
         hasValidPageInput
     }
+}
+
+function validateInput() {
+    const hasValidInput = this.validity.valid && this.value !== "";
+    const pageInput = getPageInput();
+
+    switch (this) {
+        case pageCountInput:
+            (pageInput.hasValidPageCount) ? setInputAsValid(this) : setInputAsInvalid(this);
+            break;
+        case pagesReadInput:
+            (pageInput.hasValidPagesRead) ? setInputAsValid(this) : setInputAsInvalid(this);
+            break;
+        case this:
+            (hasValidInput) ? setInputAsValid(this) : setInputAsInvalid(this);
+    }
+
+    if (!pageInput.hasValidPageInput) {
+        currentBookInput.disabled = true;
+    } else {
+        currentBookInput.disabled = false;
+    }
+}
+
+function setInputAsValid(input) {
+    input.classList.remove("invalid")
+    input.classList.add("valid");
+}
+
+function setInputAsInvalid(input) {
+    input.classList.remove("valid")
+    input.classList.add("invalid")
 }
 
 // Show stored books
