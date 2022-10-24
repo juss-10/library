@@ -165,10 +165,8 @@ function validateInput() {
     if (!pageInput.hasValidCurrentBookRange) {
         currentBookInput.checked = false;
         currentBookInput.disabled = true;
-        console.log("here")
     } else {
         currentBookInput.disabled = false;
-        console.log("or here")
     }
 }
 
@@ -195,9 +193,6 @@ function togglePagesReadInput() {
     } else if (!pageInput.hasValidPageRange) {
         pagesReadInput.value = "";
         pagesReadInput.classList.remove("valid", "invalid")
-    } else if (!pageInput.hasPageCountInput) {
-        pagesReadInput.value = "";
-        pagesReadInput.disabled = true;
     }
 }
 
@@ -313,17 +308,32 @@ function deleteBookHandler(book) {
     const confirmDeleteModal = document.querySelector('[data-library-modal="confirm-delete"]');
     const confirmDeleteButton = document.querySelector('[data-library-button="confirm-book-delete"]');
     const cancelDeleteButton = document.querySelector('[data-library-button="cancel-book-delete"]');
+    const hasDeleteEventListeners = confirmDeleteButton.dataset.libraryEvent === "delete"; 
 
     openModal(confirmDeleteModal)
 
-    confirmDeleteButton.addEventListener("click", () => {
-        const deletedBookId = book.id;
-        deleteBook(book)
-        updateBookIds(deletedBookId)
-        closeModal(confirmDeleteModal)
-    })
+    if (!hasDeleteEventListeners) {
+        confirmDeleteButton.dataset.libraryEvent = "delete";
+        confirmDeleteButton.addEventListener("click", confirmDelete)
+        cancelDeleteButton.addEventListener("click", cancelDelete)
+    }
 
-    cancelDeleteButton.addEventListener("click", () => closeModal(confirmDeleteModal))
+    function confirmDelete() {
+        deleteBook(book)
+        closeModal(confirmDeleteModal)
+        resetDeleteListeners()
+    }
+
+    function cancelDelete() {
+        closeModal(confirmDeleteModal)
+        resetDeleteListeners()
+    }
+
+    function resetDeleteListeners() {
+        confirmDeleteButton.removeAttribute("data-library-event");
+        confirmDeleteButton.removeEventListener("click", confirmDelete)
+        cancelDeleteButton.removeEventListener("click", cancelDelete)
+    }
 }
 
 function deleteBook(book) {
@@ -336,6 +346,8 @@ function deleteBook(book) {
     if (!hasCurrentBook) {
         hideCurrentBook()
     }
+
+    updateBookIds(book.id)
 }
 
 function updateBookIds(deletedBookId) {
