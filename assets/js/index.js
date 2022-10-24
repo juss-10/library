@@ -51,6 +51,8 @@ function closeModal(modal) {
 
 function resetForm(form) {
     form.reset()
+    const formInputs = Array.from(form.querySelectorAll("input"));
+    formInputs.forEach(formInput => formInput.classList.remove("valid", "invalid"))
 }
 
 function saveBookHandler(event) {
