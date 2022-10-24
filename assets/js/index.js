@@ -302,6 +302,8 @@ function setBookInputs(book) {
     pagesReadInput.value = book.pagesRead;
     currentBookInput.checked = book.currentBook;
     idInput.value = book.id;
+    const pageInput = getPageInput();
+    pagesReadInput.setAttribute("max", pageInput.pageCount)
 }
 
 function deleteBookHandler(book) {
