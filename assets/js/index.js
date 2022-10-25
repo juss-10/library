@@ -252,12 +252,13 @@ function removeBookHtml(book) {
     const idElements = Array.from(document.querySelectorAll(`[data-library-book-id="${book.id}"]`));
     const bookCards = idElements.map(idElement => idElement.closest(".card"));
     const hasBooksToRemove = bookCards.length > 0;
+    const isSameAsCurrentBook = (currentBookList.querySelector(`[data-library-book-id="${book.id}"]`)) ? true : false;
 
     if (hasBooksToRemove) {
         bookCards.forEach(bookCard => bookCard.remove())
     }
 
-    if (hasBooksToRemove && !book.currentBook) {
+    if (isSameAsCurrentBook && !book.currentBook) {
         hideCurrentBook()
     }
 }
