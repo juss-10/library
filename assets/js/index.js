@@ -62,6 +62,7 @@ function saveBookHandler(event) {
     if (valid) {
         const book = saveBookToLibrary();
         showLibraryBook(book)
+        toggleListMessage()
         enableBookControls(book)
         closeModal(saveBookModal)
         resetForm(saveBookForm)
@@ -325,6 +326,7 @@ function deleteBookHandler(book) {
 
     function confirmDelete() {
         deleteBook(book)
+        toggleListMessage()
         closeModal(confirmDeleteModal)
         resetDeleteListeners()
     }
@@ -380,4 +382,20 @@ function updateBookIds(deletedBookId) {
             book.id = book.id - 1;
         }
     })
+}
+
+function toggleListMessage() {
+    const lists = [readingList, finishedReadingList];
+
+    for (const list of lists) {
+        const hasSavedBooks = list.children.length > 1;
+        const listMessage = list.querySelector("[data-library-text]");
+        const hasVisibleMessage = window.getComputedStyle(listMessage, null).display !== "none";
+
+        if (hasSavedBooks && hasVisibleMessage) {
+            listMessage.style.display = "none";
+        } else if (!hasSavedBooks && !hasVisibleMessage) {
+            listMessage.removeAttribute("style")
+        }
+    }
 }
