@@ -104,6 +104,7 @@ function saveBookToLibrary() {
         updateCurrentBook(book)
     }
 
+    idInput.value = "";
     return myLibrary[myLibrary.indexOf(book)]
 }
 
