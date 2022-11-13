@@ -58,14 +58,16 @@ function saveBookToLibrary() {
     return myLibrary[myLibrary.indexOf(book)]
 }
 
-function Book(title, author, pageCount, pagesRead, isCurrentBook) {
-    this.title = title;
-    this.author = author;
-    this.pageCount = pageCount;
-    this.pagesRead = pagesRead;
-    this.percentRead = (this.pagesRead / this.pageCount) * 100;
-    this.finishedReading = this.percentRead === 100;
-    this.currentBook = (this.finishedReading) ? false : isCurrentBook;
+class Book {
+    constructor(title, author, pageCount, pagesRead, isCurrentBook) {
+        this.title = title;
+        this.author = author;
+        this.pageCount = pageCount;
+        this.pagesRead = pagesRead;
+        this.percentRead = (this.pagesRead / this.pageCount) * 100;
+        this.finishedReading = this.percentRead === 100;
+        this.currentBook = (this.finishedReading) ? false : isCurrentBook;
+    }
 }
 
 function updateCurrentBook(currentBook) {
